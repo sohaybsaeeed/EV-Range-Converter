@@ -79,7 +79,7 @@ function PrivacyPolicy({ darkMode, setDarkMode }: PrivacyPolicyProps) {
     {
       title: 'Contact',
       body: [
-        'For privacy questions or requests related to EV Range Converter, contact us at privacy@evrangeconverter.com.',
+        'For privacy questions or requests related to EV Range Converter, contact us at sohaibsaeedofficial@gmail.com.',
       ],
     },
   ];
