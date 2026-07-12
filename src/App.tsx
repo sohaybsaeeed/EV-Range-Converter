@@ -10,7 +10,14 @@ import UnitToggle from './components/UnitToggle';
 import AdvancedPanel from './components/AdvancedPanel';
 import Sidebar from './components/Sidebar';
 import RangeChart from './components/RangeChart';
-import { Sun, Moon, BookOpen, Share2, BarChart3 } from 'lucide-react';
+import AboutPage from './components/AboutPage';
+import { Sun, Moon, BookOpen, Share2, BarChart3, Calculator, Users } from 'lucide-react';
+
+type AppPage = 'calculator' | 'about';
+
+const getPageFromPath = (): AppPage => (
+  window.location.pathname.replace(/\/$/, '') === '/about' ? 'about' : 'calculator'
+);
 
 function App() {
   // Load persisted state
@@ -36,6 +43,21 @@ function App() {
   // Sidebar & chart
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showChart, setShowChart] = useState(false);
+  const [page, setPage] = useState<AppPage>(() => getPageFromPath());
+
+  useEffect(() => {
+    const handlePopState = () => setPage(getPageFromPath());
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigateTo = useCallback((nextPage: AppPage) => {
+    const nextPath = nextPage === 'about' ? '/about' : '/';
+    setPage(nextPage);
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({}, '', nextPath);
+    }
+  }, []);
 
   // URL params on mount
   useEffect(() => {
@@ -190,121 +212,160 @@ function App() {
             </div>
           </div>
 
-          {/* Unit Toggle + Actions */}
-          <div className="flex flex-wrap items-center gap-3">
-            <UnitToggle unit={unit} setUnit={setUnit} darkMode={darkMode} />
-            
+          <nav className={`inline-flex rounded-full p-1 mb-5 ${
+            darkMode ? 'bg-white/10' : 'bg-gray-200'
+          }`} aria-label="Primary navigation">
             <button
-              onClick={() => setShowChart(!showChart)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all ${
-                showChart
+              onClick={() => navigateTo('calculator')}
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+                page === 'calculator'
                   ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
                   : darkMode
-                    ? 'bg-white/10 text-gray-300 hover:bg-white/15'
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                    ? 'text-gray-400 hover:text-gray-200'
+                    : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              <BarChart3 size={14} />
-              Chart
+              <Calculator size={15} />
+              Calculator
             </button>
-
             <button
-              onClick={handleShare}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all ${
-                darkMode
-                  ? 'bg-white/10 text-gray-300 hover:bg-white/15'
-                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              onClick={() => navigateTo('about')}
+              className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+                page === 'about'
+                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                  : darkMode
+                    ? 'text-gray-400 hover:text-gray-200'
+                    : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              <Share2 size={14} />
-              Share
+              <Users size={15} />
+              About Us
             </button>
+          </nav>
 
-            {(winterPenalty > 0 || aggressiveDriving) && (
-              <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
-                darkMode ? 'bg-purple-500/20 text-purple-300' : 'bg-purple-100 text-purple-700'
-              }`}>
-                Adjustments Active
-              </span>
-            )}
-          </div>
-        </header>
-
-        {/* Conversion Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
-          {STANDARDS.map((standard, index) => (
-            <RangeCard
-              key={standard.id}
-              standard={standard}
-              displayValue={displayValues[standard.id]}
-              unit={unit}
-              isSource={sourceStandard === standard.id}
-              isFocused={focusedCard === standard.id}
-              anyFocused={focusedCard !== null}
-              darkMode={darkMode}
-              onValueChange={handleValueChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              index={index}
-            />
-          ))}
-        </div>
-
-        {/* Chart */}
-        {showChart && (
-          <div className="mb-6 animate-fade-in-up">
-            <RangeChart
-              values={numericDisplayValues}
-              unit={unit}
-              darkMode={darkMode}
-              sourceId={sourceStandard}
-            />
-          </div>
-        )}
-
-        {/* Advanced Panel */}
-        <div className="mb-8">
-          <AdvancedPanel
-            isOpen={advancedOpen}
-            setIsOpen={setAdvancedOpen}
-            winterPenalty={winterPenalty}
-            setWinterPenalty={setWinterPenalty}
-            aggressiveDriving={aggressiveDriving}
-            setAggressiveDriving={setAggressiveDriving}
-            darkMode={darkMode}
-          />
-        </div>
-
-        {/* Quick Reference */}
-        <div className={`rounded-2xl p-5 mb-8 ${
-          darkMode
-            ? 'bg-white/[0.03] border border-white/[0.06]'
-            : 'bg-white border border-gray-200 shadow-sm'
-        }`}>
-          <h3 className={`text-xs font-bold uppercase tracking-wider mb-4 ${
-            darkMode ? 'text-gray-400' : 'text-gray-500'
-          }`}>
-            Quick Reference: Conversion Factors (relative to EPA)
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {STANDARDS.map((s) => (
-              <div
-                key={s.id}
-                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs ${
-                  darkMode ? 'bg-white/5' : 'bg-gray-50'
+          {/* Unit Toggle + Actions */}
+          {page === 'calculator' && (
+            <div className="flex flex-wrap items-center gap-3">
+              <UnitToggle unit={unit} setUnit={setUnit} darkMode={darkMode} />
+              
+              <button
+                onClick={() => setShowChart(!showChart)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all ${
+                  showChart
+                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                    : darkMode
+                      ? 'bg-white/10 text-gray-300 hover:bg-white/15'
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
                 }`}
               >
-                <span>{s.iconEmoji}</span>
-                <span className={`font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
-                  {s.name}
+                <BarChart3 size={14} />
+                Chart
+              </button>
+
+              <button
+                onClick={handleShare}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-all ${
+                  darkMode
+                    ? 'bg-white/10 text-gray-300 hover:bg-white/15'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
+              >
+                <Share2 size={14} />
+                Share
+              </button>
+
+              {(winterPenalty > 0 || aggressiveDriving) && (
+                <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+                  darkMode ? 'bg-purple-500/20 text-purple-300' : 'bg-purple-100 text-purple-700'
+                }`}>
+                  Adjustments Active
                 </span>
-                <span className={`font-mono ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                  {s.factorToEPA}×
-                </span>
+              )}
+            </div>
+          )}
+        </header>
+
+        {page === 'about' ? (
+          <AboutPage darkMode={darkMode} />
+        ) : (
+          <>
+            {/* Conversion Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-6">
+              {STANDARDS.map((standard, index) => (
+                <RangeCard
+                  key={standard.id}
+                  standard={standard}
+                  displayValue={displayValues[standard.id]}
+                  unit={unit}
+                  isSource={sourceStandard === standard.id}
+                  isFocused={focusedCard === standard.id}
+                  anyFocused={focusedCard !== null}
+                  darkMode={darkMode}
+                  onValueChange={handleValueChange}
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  index={index}
+                />
+              ))}
+            </div>
+
+            {/* Chart */}
+            {showChart && (
+              <div className="mb-6 animate-fade-in-up">
+                <RangeChart
+                  values={numericDisplayValues}
+                  unit={unit}
+                  darkMode={darkMode}
+                  sourceId={sourceStandard}
+                />
               </div>
-            ))}
-          </div>
-        </div>
+            )}
+
+            {/* Advanced Panel */}
+            <div className="mb-8">
+              <AdvancedPanel
+                isOpen={advancedOpen}
+                setIsOpen={setAdvancedOpen}
+                winterPenalty={winterPenalty}
+                setWinterPenalty={setWinterPenalty}
+                aggressiveDriving={aggressiveDriving}
+                setAggressiveDriving={setAggressiveDriving}
+                darkMode={darkMode}
+              />
+            </div>
+
+            {/* Quick Reference */}
+            <div className={`rounded-2xl p-5 mb-8 ${
+              darkMode
+                ? 'bg-white/[0.03] border border-white/[0.06]'
+                : 'bg-white border border-gray-200 shadow-sm'
+            }`}>
+              <h3 className={`text-xs font-bold uppercase tracking-wider mb-4 ${
+                darkMode ? 'text-gray-400' : 'text-gray-500'
+              }`}>
+                Quick Reference: Conversion Factors (relative to EPA)
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {STANDARDS.map((s) => (
+                  <div
+                    key={s.id}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs ${
+                      darkMode ? 'bg-white/5' : 'bg-gray-50'
+                    }`}
+                  >
+                    <span>{s.iconEmoji}</span>
+                    <span className={`font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                      {s.name}
+                    </span>
+                    <span className={`font-mono ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+                      {s.factorToEPA}×
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Footer */}
         <footer className={`text-center pb-8 ${darkMode ? 'text-gray-600' : 'text-gray-400'}`}>
@@ -320,6 +381,13 @@ function App() {
                 className={`hover:underline ${darkMode ? 'text-blue-400/60 hover:text-blue-400' : 'text-blue-500/60 hover:text-blue-500'}`}
               >
                 Learn about standards
+              </button>
+              <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
+              <button
+                onClick={() => navigateTo('about')}
+                className={`hover:underline ${darkMode ? 'text-blue-400/60 hover:text-blue-400' : 'text-blue-500/60 hover:text-blue-500'}`}
+              >
+                About Us
               </button>
               <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
               <span className={darkMode ? 'text-gray-700' : 'text-gray-400'}>
