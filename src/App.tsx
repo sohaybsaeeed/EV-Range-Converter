@@ -10,7 +10,189 @@ import UnitToggle from './components/UnitToggle';
 import AdvancedPanel from './components/AdvancedPanel';
 import Sidebar from './components/Sidebar';
 import RangeChart from './components/RangeChart';
-import { Sun, Moon, BookOpen, Share2, BarChart3 } from 'lucide-react';
+import { Sun, Moon, BookOpen, Share2, BarChart3, ArrowLeft, ShieldCheck } from 'lucide-react';
+
+interface PrivacyPolicyProps {
+  darkMode: boolean;
+  setDarkMode: (value: boolean) => void;
+}
+
+function PrivacyPolicy({ darkMode, setDarkMode }: PrivacyPolicyProps) {
+  useEffect(() => {
+    document.title = 'Privacy Policy | EV Range Converter';
+  }, []);
+
+  const sections = [
+    {
+      title: 'Information We Collect',
+      body: [
+        'EV Range Converter is a free informational tool for comparing electric vehicle range standards. You can use the converter without creating an account or directly submitting personal information.',
+        'The website may automatically receive limited technical information, such as browser type, device type, referring page, approximate location derived from IP address, pages viewed, and basic usage events. This information helps operate the website, understand performance, prevent abuse, and improve content.',
+      ],
+    },
+    {
+      title: 'Cookies, Analytics, and Advertising',
+      body: [
+        'We may use cookies, local storage, and similar technologies to remember basic preferences, such as display mode and distance unit, and to understand how visitors use the site.',
+        'This website may display advertisements served by Google AdSense or other advertising partners. Third-party vendors, including Google, may use cookies to serve ads based on a user\'s prior visits to this website or other websites.',
+        'Google\'s use of advertising cookies enables it and its partners to serve ads based on visits to EV Range Converter and other sites on the internet. Users may opt out of personalized advertising by visiting Google Ads Settings. Users may also visit aboutads.info to learn about additional opt-out choices from participating vendors.',
+      ],
+    },
+    {
+      title: 'How We Use Information',
+      body: [
+        'We use collected information to provide and maintain the website, remember user preferences, measure site performance, understand which tools and pages are useful, protect against spam or misuse, and support advertising that keeps the website free to use.',
+        'We do not sell personal information. We do not use this website to collect sensitive personal information such as government identifiers, health records, payment card details, or precise geolocation.',
+      ],
+    },
+    {
+      title: 'Third-Party Services',
+      body: [
+        'The website may rely on third-party service providers for hosting, analytics, advertising, fonts, performance measurement, or security. These providers may process limited information according to their own privacy policies.',
+        'Advertisements and external links may lead to websites that are not operated by EV Range Converter. We are not responsible for the privacy practices or content of third-party websites.',
+      ],
+    },
+    {
+      title: 'Data Retention',
+      body: [
+        'Preference data stored in your browser remains on your device until you clear it. Aggregated analytics, advertising, and server log data may be retained by us or our service providers for as long as needed for legitimate operational, security, reporting, and legal purposes.',
+      ],
+    },
+    {
+      title: 'Children\'s Privacy',
+      body: [
+        'EV Range Converter is intended for a general audience and is not directed to children under 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided personal information through this website, contact us so we can review and remove it where appropriate.',
+      ],
+    },
+    {
+      title: 'Your Choices',
+      body: [
+        'You can disable cookies through your browser settings, clear local storage, use browser privacy controls, or adjust advertising personalization settings with advertising providers. Some website features, such as saved display preferences, may not work as expected if cookies or local storage are disabled.',
+      ],
+    },
+    {
+      title: 'Changes to This Policy',
+      body: [
+        'We may update this Privacy Policy from time to time to reflect changes to the website, advertising partners, legal requirements, or operational practices. The updated date at the top of this page shows when the policy was last revised.',
+      ],
+    },
+    {
+      title: 'Contact',
+      body: [
+        'For privacy questions or requests related to EV Range Converter, contact us at privacy@evrangeconverter.com.',
+      ],
+    },
+  ];
+
+  return (
+    <div className={`min-h-screen transition-colors duration-300 ${
+      darkMode
+        ? 'bg-[#0a0e1a] text-white'
+        : 'bg-gray-50 text-gray-900'
+    }`}>
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {darkMode ? (
+          <>
+            <div className="absolute top-[-12rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-cyan-500/[0.05] blur-[100px]" />
+            <div className="absolute bottom-[-10rem] left-[-8rem] h-[28rem] w-[28rem] rounded-full bg-emerald-500/[0.04] blur-[100px]" />
+          </>
+        ) : (
+          <>
+            <div className="absolute top-[-10rem] right-[-6rem] h-[28rem] w-[28rem] rounded-full bg-cyan-100/60 blur-[90px]" />
+            <div className="absolute bottom-[-8rem] left-[-6rem] h-[24rem] w-[24rem] rounded-full bg-emerald-100/50 blur-[80px]" />
+          </>
+        )}
+      </div>
+
+      <main className="relative z-10 mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
+        <header className={`mb-8 rounded-2xl border p-5 sm:p-7 ${
+          darkMode
+            ? 'border-white/[0.08] bg-white/[0.035]'
+            : 'border-gray-200 bg-white shadow-sm'
+        }`}>
+          <div className="mb-8 flex items-center justify-between gap-3">
+            <a
+              href="/"
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition-all ${
+                darkMode
+                  ? 'bg-white/10 text-gray-200 hover:bg-white/15'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <ArrowLeft size={14} />
+              Converter
+            </a>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className={`rounded-xl p-2.5 transition-all duration-200 ${
+                darkMode
+                  ? 'bg-white/10 text-yellow-400 hover:bg-white/15'
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              }`}
+              title={darkMode ? 'Light mode' : 'Dark mode'}
+            >
+              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className={`mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ${
+                darkMode ? 'bg-emerald-400/10 text-emerald-300' : 'bg-emerald-50 text-emerald-700'
+              }`}>
+                <ShieldCheck size={14} />
+                EV Range Converter
+              </div>
+              <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                Privacy Policy
+              </h1>
+              <p className={`mt-3 max-w-2xl text-sm leading-6 sm:text-base ${
+                darkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>
+                This policy explains how evrangeconverter.com handles information when you use the EV range calculator, converter tools, and related website pages.
+              </p>
+            </div>
+            <p className={`text-sm font-medium ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>
+              Last updated: July 10, 2026
+            </p>
+          </div>
+        </header>
+
+        <div className={`rounded-2xl border p-5 sm:p-8 ${
+          darkMode
+            ? 'border-white/[0.08] bg-white/[0.03]'
+            : 'border-gray-200 bg-white shadow-sm'
+        }`}>
+          <div className="space-y-8">
+            {sections.map((section) => (
+              <section key={section.title}>
+                <h2 className={`mb-3 text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                  {section.title}
+                </h2>
+                <div className={`space-y-3 text-sm leading-7 ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {section.body.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        </div>
+
+        <footer className={`py-8 text-center text-xs ${darkMode ? 'text-gray-600' : 'text-gray-400'}`}>
+          <a
+            href="/"
+            className={`font-medium hover:underline ${
+              darkMode ? 'text-blue-400/70 hover:text-blue-400' : 'text-blue-600/70 hover:text-blue-600'
+            }`}
+          >
+            Return to EV Range Converter
+          </a>
+        </footer>
+      </main>
+    </div>
+  );
+}
 
 function App() {
   // Load persisted state
@@ -68,6 +250,11 @@ function App() {
     localStorage.setItem('ev-converter-unit', unit);
   }, [unit]);
 
+  const normalizedPath = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+
+  if (normalizedPath === '/privacypolicy') {
+    return <PrivacyPolicy darkMode={darkMode} setDarkMode={setDarkMode} />;
+  }
 
   // Compute all converted values in km
   const allValuesKm = convertToAllStandards(baseValueKm, sourceStandard);
@@ -321,6 +508,13 @@ function App() {
               >
                 Learn about standards
               </button>
+              <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
+              <a
+                href="/privacypolicy"
+                className={`hover:underline ${darkMode ? 'text-blue-400/60 hover:text-blue-400' : 'text-blue-500/60 hover:text-blue-500'}`}
+              >
+                Privacy Policy
+              </a>
               <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
               <span className={darkMode ? 'text-gray-700' : 'text-gray-400'}>
                 Built with ⚡ for the EV community
