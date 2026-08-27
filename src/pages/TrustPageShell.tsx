@@ -128,6 +128,7 @@ export default function TrustPageShell({
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <a href="/aboutus" className="hover:text-emerald-500 hover:underline">About Us</a>
             <a href="/privacypolicy" className="hover:text-emerald-500 hover:underline">Privacy Policy</a>
+            <a href="/termsofuse" className="hover:text-emerald-500 hover:underline">Terms of Use</a>
             <a href="/" className="inline-flex items-center gap-1.5 hover:text-emerald-500 hover:underline">
               <Zap size={12} /> EV Range Converter
             </a>

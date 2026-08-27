@@ -13,6 +13,7 @@ import RangeChart from './components/RangeChart';
 import { Sun, Moon, BookOpen, Share2, BarChart3 } from 'lucide-react';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfUse from './pages/TermsOfUse';
 
 function App() {
   // Load persisted state
@@ -72,12 +73,16 @@ function App() {
 
   const normalizedPath = window.location.pathname.replace(/\/+$/, '').toLowerCase();
 
-  if (normalizedPath === '/privacypolicy') {
+  if (['/privacypolicy', '/privacy-policy', '/privacy'].includes(normalizedPath)) {
     return <PrivacyPolicy darkMode={darkMode} setDarkMode={setDarkMode} />;
   }
 
-  if (normalizedPath === '/aboutus') {
+  if (['/aboutus', '/about-us', '/about'].includes(normalizedPath)) {
     return <AboutUs darkMode={darkMode} setDarkMode={setDarkMode} />;
+  }
+
+  if (['/termsofuse', '/terms-of-use', '/terms', '/termsofservice', '/terms-of-service'].includes(normalizedPath)) {
+    return <TermsOfUse darkMode={darkMode} setDarkMode={setDarkMode} />;
   }
 
   // Compute all converted values in km
@@ -345,6 +350,13 @@ function App() {
                 className={`hover:underline ${darkMode ? 'text-blue-400/60 hover:text-blue-400' : 'text-blue-500/60 hover:text-blue-500'}`}
               >
                 Privacy Policy
+              </a>
+              <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
+              <a
+                href="/termsofuse"
+                className={`hover:underline ${darkMode ? 'text-blue-400/60 hover:text-blue-400' : 'text-blue-500/60 hover:text-blue-500'}`}
+              >
+                Terms of Use
               </a>
               <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
               <span className={darkMode ? 'text-gray-700' : 'text-gray-400'}>
