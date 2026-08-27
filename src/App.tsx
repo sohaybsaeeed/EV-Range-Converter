@@ -14,6 +14,7 @@ import { Sun, Moon, BookOpen, Share2, BarChart3 } from 'lucide-react';
 import AboutUs from './pages/AboutUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfUse from './pages/TermsOfUse';
+import ContactUs from './pages/ContactUs';
 
 function App() {
   // Load persisted state
@@ -83,6 +84,10 @@ function App() {
 
   if (['/termsofuse', '/terms-of-use', '/terms', '/termsofservice', '/terms-of-service'].includes(normalizedPath)) {
     return <TermsOfUse darkMode={darkMode} setDarkMode={setDarkMode} />;
+  }
+
+  if (['/contactus', '/contact-us', '/contact'].includes(normalizedPath)) {
+    return <ContactUs darkMode={darkMode} setDarkMode={setDarkMode} />;
   }
 
   // Compute all converted values in km
@@ -343,6 +348,13 @@ function App() {
                 className={`hover:underline ${darkMode ? 'text-blue-400/60 hover:text-blue-400' : 'text-blue-500/60 hover:text-blue-500'}`}
               >
                 About Us
+              </a>
+              <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
+              <a
+                href="/contactus"
+                className={`hover:underline ${darkMode ? 'text-blue-400/60 hover:text-blue-400' : 'text-blue-500/60 hover:text-blue-500'}`}
+              >
+                Contact Us
               </a>
               <span className={darkMode ? 'text-gray-700' : 'text-gray-300'}>•</span>
               <a

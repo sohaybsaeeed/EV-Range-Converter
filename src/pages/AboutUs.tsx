@@ -131,7 +131,10 @@ export default function AboutUs({ darkMode, setDarkMode }: AboutUsProps) {
           <Mail size={22} className={darkMode ? 'text-emerald-300' : 'text-emerald-700'} />
           <h2 className="mt-4 text-2xl font-extrabold tracking-tight">Get in Touch</h2>
           <p className={`mt-3 leading-7 ${mutedText}`}>
-            We are constantly working to improve our calculators and expand our resources. If you have questions, feedback, or suggestions for new tools, we would love to hear from you.
+            We are constantly working to improve our calculators and expand our resources. If you have questions, feedback, or suggestions for new tools, we would love to hear from you. Write to{' '}
+            <a href="mailto:sohaibbeforward@gmail.com" className="font-semibold underline decoration-1 underline-offset-2 hover:text-emerald-500">sohaibbeforward@gmail.com</a>, call{' '}
+            <a href="tel:+923107831891" className="font-semibold underline decoration-1 underline-offset-2 hover:text-emerald-500">+923107831891</a>, or use the{' '}
+            <a href="/contactus" className="font-semibold underline decoration-1 underline-offset-2 hover:text-emerald-500">contact page</a>.
           </p>
           <p className={`mt-4 font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>
             Thank you for relying on EV Range Converter for your electric vehicle metrics.

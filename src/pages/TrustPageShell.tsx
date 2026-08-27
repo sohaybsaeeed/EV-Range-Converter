@@ -127,6 +127,7 @@ export default function TrustPageShell({
         <footer className={`py-8 text-center text-xs ${darkMode ? 'text-gray-600' : 'text-gray-500'}`}>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             <a href="/aboutus" className="hover:text-emerald-500 hover:underline">About Us</a>
+            <a href="/contactus" className="hover:text-emerald-500 hover:underline">Contact Us</a>
             <a href="/privacypolicy" className="hover:text-emerald-500 hover:underline">Privacy Policy</a>
             <a href="/termsofuse" className="hover:text-emerald-500 hover:underline">Terms of Use</a>
             <a href="/" className="inline-flex items-center gap-1.5 hover:text-emerald-500 hover:underline">

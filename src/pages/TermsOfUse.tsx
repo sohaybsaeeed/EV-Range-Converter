@@ -113,7 +113,7 @@ const sections = [
   {
     title: 'Contact',
     paragraphs: [
-      'For questions about these Terms of Use, email legal@evrangeconverter.com. For questions about data and privacy, email privacy@evrangeconverter.com. Please do not include sensitive personal information in your message.',
+      'For questions about these Terms of Use, or about data and privacy, email sohaibbeforward@gmail.com or use the contact page at evrangeconverter.com/contactus. Please do not include sensitive personal information in your message.',
     ],
   },
 ];

@@ -12,6 +12,7 @@ const sections = [
     paragraphs: [
       'EV Range Converter is a free informational tool for comparing electric vehicle range standards. You can use the converter without creating an account or directly submitting personal information.',
       'When you visit the website, our hosting, analytics, security, or advertising providers may automatically process limited technical information. This may include your IP address, browser and device type, operating system, referring page, approximate location, pages viewed, timestamps, and interaction or diagnostic data.',
+      'If you choose to write to us through the contact page, we receive the name, email address, topic, and message you submit, so that we can read and reply to your enquiry. Contact form submissions are processed by our hosting provider, Netlify, and are used only to respond to you and to keep a record of the correspondence.',
     ],
   },
   {
@@ -72,7 +73,7 @@ const sections = [
   {
     title: 'Contact',
     paragraphs: [
-      'For questions about this Privacy Policy or a privacy request, email privacy@evrangeconverter.com. Please do not include sensitive personal information in your message.',
+      'For questions about this Privacy Policy or a privacy request, email sohaibbeforward@gmail.com or use the contact page at evrangeconverter.com/contactus. Please do not include sensitive personal information in your message.',
     ],
   },
 ];
